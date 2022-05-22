@@ -1,0 +1,13 @@
+@import '~antd/dist/antd.css';
+
+.h100 {
+    height: calc(100vh - 64px);
+}
+
+.userName {
+    color: white;
+    padding: 0 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}

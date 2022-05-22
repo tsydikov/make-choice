@@ -12,6 +12,7 @@ import {AuthModule} from "../auth/auth.module";
   imports: [
     SequelizeModule.forFeature([UserModel, ChoiceModel]),
     forwardRef(() => AuthModule),
-  ]
+  ],
+  exports: [ChoiceService]
 })
 export class ChoiceModule {}

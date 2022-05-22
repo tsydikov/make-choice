@@ -3,10 +3,16 @@
 Application for tracking the work of company employees.
 <br>
 <ul>Backend:
-<li>nest</li>
-<li>typescript</li>
-<li>postgres</li>
-<li>sequelize</li>
-<li>swagger</li>
-<li>jwt-auth</li>
+<li>Nest</li>
+<li>Typescript</li>
+<li>Postgres</li>
+<li>Sequelize</li>
+<li>Swagger</li>
+<li>JWT-auth</li>
+</ul>
+<ul>Frontend:
+<li>React</li>
+<li>Typescript</li>
+<li>Redux</li>
+<li>Ant-design</li>
 </ul>

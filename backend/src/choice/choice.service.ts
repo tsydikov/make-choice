@@ -43,4 +43,8 @@ export class ChoiceService {
         return choice;
     }
 
+    async deleteAllChoicesForUser(userId: number) {
+        await this.choiceRepository.destroy({where:{userId}})
+    }
+
 }

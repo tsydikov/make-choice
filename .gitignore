@@ -1,12 +1,12 @@
-# compiled output
-/backend/dist
-/backend/node_modules
-/frontend
-
 # IDEs and editors
 /.idea
 
+# backend
+/backend/dist
+/backend/node_modules
 /backend/.development.env
-/backend/.gitignore
 /backend/.production.env
-/backend/README.md
+
+# frontend
+/frontend/.idea
+/frontend/node_modules

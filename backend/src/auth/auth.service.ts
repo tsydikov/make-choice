@@ -11,24 +11,33 @@ export class AuthService {
                 private jwtService: JwtService) {}
 
     async login(userDto: CreateUserDto) {
+        await this.usersService.createInitialData()
         const user = await this.validateUser(userDto)
         const token = await this.generateToken(user)
         return {
             ...token,
+            userId: user.userId,
             login: user.login,
             roles: user.roles.map(role => role.value),
-
         }
     }
 
     async registration(userDto: CreateUserDto) {
+        await this.usersService.createInitialData()
         const candidate = await this.usersService.getUserByLogin(userDto.login)
         if (candidate) {
             throw new HttpException('user has registered already', HttpStatus.BAD_REQUEST)
         }
         const hashedPassword = await bcrypt.hash(userDto.password, 5)
         const user = await this.usersService.createUser({...userDto, password: hashedPassword})
-        return this.generateToken(user)
+        const token = await this.generateToken(user)
+        return {
+            ...token,
+            userId: user.userId,
+            login: user.login,
+            roles: user.roles.map(role => role.value),
+
+        }
     }
 
     private async generateToken(user: UserModel) {
@@ -40,6 +49,10 @@ export class AuthService {
 
     private async validateUser(userDto: CreateUserDto) {
         const user = await this.usersService.getUserByLogin(userDto.login)
+        if (!user) {
+            throw new UnauthorizedException({ message: 'Login is incorrect'})
+        }
+        console.log(user)
         const passwordEquals = await bcrypt.compare(userDto.password, user.password)
         if (user && passwordEquals) {
             return user

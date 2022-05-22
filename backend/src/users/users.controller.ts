@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, UseGuards, UsePipes} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes} from '@nestjs/common';
 import {CreateUserDto} from "./dto/create-user.dto";
 import {UsersService} from "./users.service";
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
@@ -30,6 +30,14 @@ export class UsersController {
         return this.usersService.getAllUsers()
     }
 
+    @ApiOperation({summary: 'Get user profile'})
+    @ApiResponse({status: 200, type: [UserModel]})
+    @ApiBearerAuth()
+    @Get('/profile/:login')
+    getProfile(@Param('login') login: string) {
+        return this.usersService.getProfile(login)
+    }
+
     @ApiOperation({summary: 'Add role'})
     @ApiResponse({status: 200})
     @ApiBearerAuth()
@@ -38,5 +46,15 @@ export class UsersController {
     @Post('/role')
     addRole(@Body() dto: AddRoleDto) {
         return this.usersService.addRole(dto);
+    }
+
+    @ApiOperation({summary: 'delete user profile'})
+    @ApiResponse({status: 200, type: [UserModel]})
+    @ApiBearerAuth()
+    @Roles("admin")
+    @UseGuards(RolesGuard)
+    @Delete('/:login')
+    deleteUser(@Param('login') login: string) {
+        return this.usersService.deleteUser(login)
     }
 }
